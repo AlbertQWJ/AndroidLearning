@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.MyApplicationExample" parent="Theme.MaterialComponents.DayNight.NoActionBar"> <!--Change DarkActionBar to NoActionBar-->
+    <style name="Theme.MyApplicationExample" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge"> <!--Change DarkActionBar to NoActionBar-->
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/black</item>
@@ -13,4 +13,14 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.MyApplicationExample.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.MyApplicationExample.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.MyApplicationExample.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

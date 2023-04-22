@@ -105,6 +105,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     } else {
                                         // If sign in fails, display a message to the user.
 //                                        Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                        progressBar.setVisibility(View.GONE);
                                         Toast.makeText(LoginActivity.this, "Incorrect Password, or Account does not exist.",
                                                 Toast.LENGTH_SHORT).show();
 //                                        updateUI(null);
@@ -130,6 +131,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                        Toast.makeText(this, "密码不正确，或用户不存在", Toast.LENGTH_SHORT).show();
 //                    }
                 } else {
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(this, "Please Enter E-mail or Password", Toast.LENGTH_SHORT).show();
                 }
                 break;

@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">HearME</string>
+    <string name="title_chat">Chats</string>
+    <string name="title_music">Music</string>
+    <string name="title_moments">Moments</string>
+    <string name="title_settings">Settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_chats_fragment">Hello chats fragment</string>
+    <string name="hello_music_fragment">Hello music fragment</string>
+    <string name="hello_moments_fragment">Hello moments fragment</string>
+    <string name="hello_settings_fragment">Hello settings fragment</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.myapplicationexample;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -24,9 +25,12 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -36,8 +40,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ProgressBar progressBar;
     //Google sign up
     FloatingActionButton google_signup;
+    FirebaseDatabase database;
     GoogleSignInOptions gso;
-    GoogleSignInClient gsc;
+    GoogleSignInClient mGoogleSignInClient;
+    ProgressDialog progressDialog;
 
 //    private DatabaseHelper DatabaseHelper;
     private TextView mTvLoginactivityRegister;
@@ -72,23 +78,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void initView() {
 
         // 初始化控件
-        mAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.progressBar);
+
+
         mBtLoginactivityLogin = findViewById(R.id.loginactivity_btn_login);
         mTvLoginactivityRegister = findViewById(R.id.loginactivity_tv_register);
         mEtLoginactivityUsername = findViewById(R.id.loginactivity_et_username);
         mEtLoginactivityPassword = findViewById(R.id.loginactivity_et_password);
 
+        mAuth = FirebaseAuth.getInstance();
         google_signup=findViewById(R.id.loginactivity_google);
-        gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                        .build();
+        database = FirebaseDatabase.getInstance();
 
-        gsc= GoogleSignIn.getClient(this, gso);
+        progressDialog = new ProgressDialog(LoginActivity.this);
+        progressDialog.setTitle("Create Account");
+        //ProgressDialog.setMessage("Creating");
+
+        GoogleSignInOptions
+        gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                        .requestEmail()
+                                .build();
+
+        mGoogleSignInClient= GoogleSignIn.getClient(this, gso);
 
         // 设置点击事件监听器
         mBtLoginactivityLogin.setOnClickListener(this);
         mTvLoginactivityRegister.setOnClickListener(this);
+
         google_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,28 +114,87 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
+    int RC_SIGN_IN = 40;
+
     private void SignIn() {
 
-        Intent intent=gsc.getSignInIntent();
-        startActivityForResult(intent, 100);
+        Intent intent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(intent, RC_SIGN_IN);
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode==100){
-            Task<GoogleSignInAccount> task=GoogleSignIn.getSignedInAccountFromIntent(data);
+        if (requestCode == RC_SIGN_IN){
+
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+
             try {
-                task.getResult(ApiException.class);
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent);
-                finish();
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+
+                firebaseAuth(account.getIdToken());
+
             } catch (ApiException e) {
-                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
             }
+
         }
     }
+
+    private void firebaseAuth(String idToken) {
+
+       AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+
+       mAuth.signInWithCredential(credential)
+               .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                   @Override
+                   public void onComplete(@NonNull Task<AuthResult> task) {
+
+                       if (task.isSuccessful()){
+
+                           FirebaseUser user = mAuth.getCurrentUser();
+
+                           Users users = new Users();
+                           users.setUserId(user.getUid());
+                           users.setName(user.getDisplayName());
+                           users.setProfile(user.getPhotoUrl().toString());
+
+                           database.getReference().child("Users").child(user.getUid()).setValue(users);
+
+                           Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                           startActivity(intent);
+                           finish();
+
+                       }
+                       else {
+
+                           Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
+
+                       }
+
+                   }
+               });
+
+    }
+
+    //    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode==100){
+//            Task<GoogleSignInAccount> task=GoogleSignIn.getSignedInAccountFromIntent(data);
+//            try {
+//                task.getResult(ApiException.class);
+//                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+//                startActivity(intent);
+//                finish();
+//            } catch (ApiException e) {
+//                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//    }
 
     public void onClick(View view) {
         switch (view.getId()) {

@@ -24,7 +24,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_centerVertical="true"
-        android:background="@drawable/ic_left_back"
+        android:background="@drawable/ic_baseline_arrow_back_24"
         android:clickable="true"
         android:onClick="onClick"
         app:layout_constraintBottom_toTopOf="@+id/registeractivity_constraintLayout"
@@ -67,6 +67,7 @@
             app:layout_constraintVertical_bias=".3"
             app:layout_constraintHorizontal_bias=".5"
             android:hint="E-mail"
+            android:singleLine="true"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
@@ -81,6 +82,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Enter Password"
+            android:singleLine="true"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
@@ -99,6 +101,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Re-enter Password"
+            android:singleLine="true"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
@@ -129,7 +132,8 @@
             app:layout_constraintTop_toBottomOf="@+id/registeractivity_et_password2"
             app:layout_constraintVertical_bias="0"
             app:layout_constraintWidth_percent=".8"
-            android:hint="Verify Code" />
+            android:hint="Verify Code"
+            android:singleLine="true"/>
 
         <ImageView
             android:id="@+id/registeractivity_iv_showCode"

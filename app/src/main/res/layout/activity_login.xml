@@ -50,6 +50,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_background"
             android:hint="E-mail"
+            android:singleLine="true"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
@@ -65,6 +66,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Password"
+            android:singleLine="true"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
@@ -123,7 +125,7 @@
             android:id="@+id/loginactivity_tv_notice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="————————Other Login Methods————————"
+            android:text="Other Login Methods>>>"
             android:textColor="#B3B3B3"
             android:layout_marginTop="45dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -131,44 +133,46 @@
             app:layout_constraintTop_toBottomOf="@+id/loginactivity_btn_login" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/loginactivity_facebook"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="35dp"
-            android:src="@drawable/facebook"
-            app:backgroundTint="@color/white"
-            android:layout_marginBottom="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/loginactivity_google"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="20dp"
             android:elevation="35dp"
             android:src="@drawable/google"
-            app:backgroundTint="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/loginactivity_facebook"
-            app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/loginactivity_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:elevation="35dp"
-            android:src="@drawable/phone"
             app:backgroundTint="@color/white"
             android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toEndOf="@+id/loginactivity_facebook"/>
+            app:layout_constraintStart_toStartOf="parent"/>
+
+<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--            android:id="@+id/loginactivity_facebook"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginRight="10dp"-->
+<!--            android:layout_marginBottom="20dp"-->
+<!--            android:elevation="35dp"-->
+<!--            android:src="@drawable/facebook"-->
+<!--            app:backgroundTint="@color/white"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/loginactivity_google"-->
+<!--            app:layout_constraintHorizontal_bias="1"-->
+<!--            app:layout_constraintStart_toStartOf="parent"/>-->
+
+<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--            android:id="@+id/loginactivity_phone"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:elevation="35dp"-->
+<!--            android:src="@drawable/phone"-->
+<!--            app:backgroundTint="@color/white"-->
+<!--            android:layout_marginBottom="20dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/loginactivity_google"/>-->
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

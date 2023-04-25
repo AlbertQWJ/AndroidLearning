@@ -31,8 +31,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -74,6 +76,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 //        DatabaseHelper = new DatabaseHelper(this);
     }
+//    Just For Test
+//    private void addDataToFirestore(){
+//        FirebaseFirestore database = FirebaseFirestore.getInstance();
+//        HashMap<String, Object> data = new HashMap<>();
+//        data.put("first_name", "Weijie");
+//        data.put("last_name", "QIU");
+//        database.collection("users")
+//                .add(data)
+//                .addOnSuccessListener(documentReference -> {
+//                    Toast.makeText(getApplicationContext(), "Data Inserted", Toast.LENGTH_SHORT).show();
+//                })
+//                .addOnFailureListener(exception -> {
+//                    Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+//                });
+//    }
 
     private void initView() {
 
@@ -120,6 +137,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         Intent intent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(intent, RC_SIGN_IN);
+        //addDataToFirestore();
 
     }
 
@@ -220,6 +238,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                                        Log.d(TAG, "signInWithEmail:success");
 //                                        FirebaseUser user = mAuth.getCurrentUser();
 //                                        updateUI(user);
+                                        //addDataToFirestore();
                                         Toast.makeText(LoginActivity.this, "Login Successful.",
                                                 Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);

@@ -31,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     GoogleSignInOptions gso;
     GoogleSignInClient mGoogleSignInClient;
     ProgressDialog progressDialog;
+    private PreferenceManager preferenceManager;
 
 //    private DatabaseHelper DatabaseHelper;
     private TextView mTvLoginactivityRegister;
@@ -73,6 +75,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         initView();
+
+        preferenceManager = new PreferenceManager(getApplicationContext());
 
 //        DatabaseHelper = new DatabaseHelper(this);
     }
@@ -139,6 +143,37 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         startActivityForResult(intent, RC_SIGN_IN);
         //addDataToFirestore();
 
+    }
+
+    private  void SignInFirestore() {
+
+        mEtLoginactivityUsername = findViewById(R.id.loginactivity_et_username);
+        mEtLoginactivityPassword = findViewById(R.id.loginactivity_et_password);
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        database.collection(Constants.KEY_COLLECTION_USERS)
+                .whereEqualTo(Constants.KEY_EMAIL, mEtLoginactivityUsername.getText().toString())
+                .whereEqualTo(Constants.KEY_PASSWORD, mEtLoginactivityPassword.getText().toString())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null
+                        && task.getResult().getDocuments().size() >0) {
+                        DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                        preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+                        preferenceManager.putString(Constants.KEY_USER_ID, documentSnapshot.getId());
+                        preferenceManager.putString(Constants.KEY_NAME, documentSnapshot.getString(Constants.KEY_NAME));
+                        preferenceManager.putString(Constants.KEY_IMAGE, documentSnapshot.getString(Constants.KEY_IMAGE));
+//                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                        intent.addFlags((Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+//                        startActivity(intent);
+                    }else {
+                        progressBar.setVisibility(View.GONE);
+                        showToast("Unable to Sign In");
+                    }
+                });
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -239,6 +274,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                                        FirebaseUser user = mAuth.getCurrentUser();
 //                                        updateUI(user);
                                         //addDataToFirestore();
+                                        SignInFirestore();
                                         Toast.makeText(LoginActivity.this, "Login Successful.",
                                                 Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);

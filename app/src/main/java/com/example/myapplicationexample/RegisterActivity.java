@@ -88,6 +88,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         realCode = Code.getInstance().getCode().toLowerCase();
 
         preferenceManager = new PreferenceManager(getApplicationContext());
+        if (preferenceManager.getBoolean(Constants.KEY_IS_SIGNED_IN)) {
+//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//            startActivity(intent);
+//            finish();
+        }
 
     }
 
@@ -114,9 +119,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     preferenceManager.putString(Constants.KEY_USER_ID, documentReference.getId());
                     preferenceManager.putString(Constants.KEY_NAME, mEtRegisteractivityUserId.getText().toString());
                     preferenceManager.putString(Constants.KEY_IMAGE, encodedImage);
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
+//                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                    startActivity(intent);
                     progressBar.setVisibility(View.GONE);
                 })
                 .addOnFailureListener(exception -> {

@@ -8,8 +8,12 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,10 +23,15 @@ public class MainActivity extends AppCompatActivity {
     ViewPagerAdapter viewPagerAdapter;
     BottomNavigationView bottomNavigationView;
 
+    private PreferenceManager preferenceManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        preferenceManager = new PreferenceManager(getApplicationContext());
+        getToken();
 
         bottomNavigationView = findViewById(R.id.bottomNav);
         viewPager2 = findViewById(R.id.viewPager);
@@ -103,5 +112,25 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void getToken() {
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(this::updateToken);
+    }
+
+    //Gain the Login Status and Add System Token to Cloud Firestore for Ensure the User Status
+    private void updateToken(String token) {
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        DocumentReference documentReference =
+                database.collection(Constants.KEY_COLLECTION_USERS).document(
+                        preferenceManager.getString(Constants.KEY_USER_ID)
+                );
+        documentReference.update(Constants.KEY_FCM_TOKEN, token)
+                .addOnSuccessListener(unused -> showToast("Token Updated Successfully"))
+                .addOnFailureListener(e -> showToast("Unable To Update Token"));
     }
 }

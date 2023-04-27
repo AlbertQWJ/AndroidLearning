@@ -1,14 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatsFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ChatsFragment"
+    android:background="@color/theme_grey">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/chat_top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_chats_fragment" />
+        android:layout_height="wrap_content"
+        android:text="HearME Chat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:textSize="@dimen/_16sdp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/_10sdp"/>
 
-</FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@drawable/background_context_bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chat_top">
+
+    </FrameLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabNewChat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_24sdp"
+        android:layout_marginRight="@dimen/_24sdp"
+        android:layout_marginBottom="@dimen/_24sdp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_add"
+        android:backgroundTint="@color/theme_grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:tint="@color/white"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

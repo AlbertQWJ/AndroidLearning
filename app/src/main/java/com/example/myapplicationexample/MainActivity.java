@@ -2,7 +2,6 @@ package com.example.myapplicationexample;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;

@@ -11,4 +11,8 @@
     <color name="theme_grey">#1f1f1f</color>
     <color name="input_background">#D3D3D3</color>
     <color name="secondary_text">#212121</color>
+    <color name="third_text">#757575</color>
+    <color name="primary_dark">#1E3957</color>
+    <color name="primary_text">#212121</color>
+    <color name="received_message_background">#2F487F</color>
 </resources>

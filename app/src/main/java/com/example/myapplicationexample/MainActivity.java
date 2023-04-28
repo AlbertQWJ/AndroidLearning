@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         preferenceManager = new PreferenceManager(getApplicationContext());
-        getToken();
+        //getToken();
 
         bottomNavigationView = findViewById(R.id.bottomNav);
         viewPager2 = findViewById(R.id.viewPager);

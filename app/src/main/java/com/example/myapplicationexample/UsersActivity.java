@@ -2,6 +2,7 @@ package com.example.myapplicationexample;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -12,7 +13,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsersActivity extends AppCompatActivity {
+public class UsersActivity extends AppCompatActivity implements UserListener{
 
     private ActivityUsersBinding binding;
     private PreferenceManager preferenceManager;
@@ -49,10 +50,11 @@ public class UsersActivity extends AppCompatActivity {
                            appUser.email = queryDocumentSnapshot.getString(Constants.KEY_EMAIL);
                            appUser.image = queryDocumentSnapshot.getString(Constants.KEY_IMAGE);
                            appUser.token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN);
+                           appUser.id = queryDocumentSnapshot.getId();
                            appUsers.add(appUser);
                        }
                        if (appUsers.size() > 0) {
-                           UsersAdapter usersAdapter = new UsersAdapter(appUsers);
+                           UsersAdapter usersAdapter = new UsersAdapter(appUsers, this);
                            binding.usersRecyclerView.setAdapter(usersAdapter);
                            binding.usersRecyclerView.setVisibility(View.VISIBLE);
                        }else {
@@ -75,5 +77,13 @@ public class UsersActivity extends AppCompatActivity {
         }else {
             binding.progressBar.setVisibility(View.INVISIBLE);
         }
+    }
+
+    @Override
+    public void onUserClicked(AppUser appUser) {
+        Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+        intent.putExtra(Constants.KEY_USER, appUser);
+        startActivity(intent);
+        finish();
     }
 }

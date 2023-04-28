@@ -15,4 +15,5 @@
     <color name="primary_dark">#1E3957</color>
     <color name="primary_text">#212121</color>
     <color name="received_message_background">#2F487F</color>
+    <color name="setting_bar">#D4D4D4</color>
 </resources>

@@ -1,12 +1,19 @@
 package com.example.myapplicationexample;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.ActivityResultLauncherKt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainer;
 
@@ -25,6 +32,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.HashMap;
@@ -41,6 +52,7 @@ public class SettingsFragment extends Fragment {
     RoundedImageView roundedImageView;
     //TextView TextName;
     FirebaseUser user;
+    Button btn_scan;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,6 +67,15 @@ public class SettingsFragment extends Fragment {
 
         //Get UserName and Signout Status
         auth = FirebaseAuth.getInstance();
+
+        //QR Scanner
+        btn_scan = view.findViewById(R.id.btn_scan);
+        btn_scan.setOnClickListener(v -> {
+
+            scanCode();
+            //barcodeLauncher.launch(new ScanOptions());
+
+        });
 
         logout_button = view.findViewById(R.id.settings_logout);
         textViewUserName = view.findViewById(R.id.settings_username);
@@ -137,4 +158,69 @@ public class SettingsFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+    /**
+     * 扫码方法
+     */
+    private void scanCode() {
+
+        ScanOptions options = new ScanOptions();
+        //IntentIntegrator integrator = new IntentIntegrator(getActivity());
+        // 设置要扫描的条码类型，ONE_D_CODE_TYPES：一维码，QR_CODE_TYPES-二维码
+        //options.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+        // Set prompt text
+        options.setPrompt("Volume up to flash on");
+        // Set beep
+        options.setBeepEnabled(true); // 扫到码后播放提示音
+        // Set capture activity
+        options.setCaptureActivity(CaptureAct.class);
+        //Locked orientation
+        options.setOrientationLocked(true);
+        options.setCameraId(0);  // 使用默认的相机
+        options.setBarcodeImageEnabled(true);
+        // Initiae scan
+        //integrator.initiateScan();
+        // Launch
+        barcodeLauncher.launch(options);
+
+    }
+
+    // Register the launcher and result handler
+    private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
+            result -> {
+                if(result.getContents() == null) {
+                    Toast.makeText(getContext().getApplicationContext(), "Cancelled", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext().getApplicationContext(), "Scanned: " + result.getContents(), Toast.LENGTH_SHORT).show();
+                    ClipboardManager manager = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                    //创建ClipData对象
+                    //第一个参数只是一个标记，随便传入。
+                    //第二个参数是要复制到剪贴版的内容
+                    ClipData clip = ClipData.newPlainText("copy text", result.getContents());
+                    //传入clipdata对象.
+                    manager.setPrimaryClip(clip);
+                    Toast.makeText(getContext().getApplicationContext(), "Content Copied to Clipboard", Toast.LENGTH_LONG).show();
+                }
+            });
+
+//    /**
+//     * 扫码结果事件
+//     * @param requestCode
+//     * @param resultCode
+//     * @param data
+//     */
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+//        if(result != null) {
+//            if(result.getContents() == null) {
+//                Toast.makeText(getActivity(), "扫码取消！", Toast.LENGTH_LONG).show();
+//            } else {
+//                Toast.makeText(getActivity(), "扫描成功，条码值: " + result.getContents(), Toast.LENGTH_LONG).show();
+//            }
+//        } else {
+//            super.onActivityResult(requestCode, resultCode, data);
+//        }
+//    }
+
 }

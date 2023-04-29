@@ -7,6 +7,17 @@
     tools:context=".SettingsFragment"
     android:background="@color/theme_grey">
 
+    <Button
+        android:id="@+id/btn_scan"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:background="@drawable/ic_baseline_qr_code_scanner_24"
+        android:backgroundTint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/imageProfile"
         android:layout_width="@dimen/_80sdp"

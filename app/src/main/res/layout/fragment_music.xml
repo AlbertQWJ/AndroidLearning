@@ -1,14 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MusicFragment">
+    android:background="@color/theme_grey">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/local_music_bottomlayout"
+        android:background="@color/white">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#9933FA"/>
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_baseline_headphones_24"
+            android:layout_centerVertical="true"
+            android:background="@drawable/background_image"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/local_music_bottom_iv_icon"/>
+        <TextView
+            android:id="@+id/local_music_bottom_tv_song"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Music Name"
+            android:layout_toRightOf="@id/local_music_bottom_iv_icon"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/local_music_bottom_tv_singer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textSize="12sp"
+            android:layout_below="@id/local_music_bottom_tv_song"
+            android:layout_alignLeft="@id/local_music_bottom_tv_song"
+            android:layout_marginTop="10dp"/>
+
+        <ImageView
+            android:id="@+id/local_music_bottom_iv_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_baseline_skip_next_24"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"/>
+
+        <ImageView
+            android:id="@+id/local_music_bottom_iv_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_baseline_play_circle_24"
+            android:layout_toLeftOf="@id/local_music_bottom_iv_next"
+            android:layout_marginRight="20dp"/>
+
+        <ImageView
+            android:id="@+id/local_music_bottom_iv_last"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_baseline_skip_previous_24"
+            android:layout_toLeftOf="@id/local_music_bottom_iv_play"
+            android:layout_marginRight="20dp"/>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/local_music_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_music_fragment" />
+        android:layout_above="@id/local_music_bottomlayout">
 
-</FrameLayout>
+    </androidx.recyclerview.widget.RecyclerView>
+</RelativeLayout>

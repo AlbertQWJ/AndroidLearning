@@ -3,8 +3,12 @@ package com.example.myapplicationexample;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
+import android.provider.Settings;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -21,6 +25,7 @@ public class SplashScreen extends AppCompatActivity {
 
     //Animations
     Animation topAnimation,bottomAnimation,middleAnimation;
+    boolean isRefuse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,15 @@ public class SplashScreen extends AppCompatActivity {
         topAnimation = AnimationUtils.loadAnimation(this,R.anim.top_animation);
         bottomAnimation = AnimationUtils.loadAnimation(this,R.anim.bottom_animation);
         middleAnimation = AnimationUtils.loadAnimation(this,R.anim.middle_animation);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !isRefuse) {// android 11  且 不是已经被拒绝
+            // 先判断有没有权限
+            if (!Environment.isExternalStorageManager()) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                intent.setData(Uri.parse("package:" + getPackageName()));
+                //startActivityForResult(intent, 1024);
+            }
+        }
 
         //Hooks
         first = findViewById(R.id.first_line);
@@ -64,5 +78,21 @@ public class SplashScreen extends AppCompatActivity {
                 finish();
             }
         },SPLASH_TIME_OUT);
+    }
+
+    // 带回授权结果
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1024 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            // 检查是否有权限
+            if (Environment.isExternalStorageManager()) {
+                isRefuse = false;
+                // 授权成功
+            } else {
+                isRefuse = true;
+                // 授权失败
+            }
+        }
     }
 }

@@ -48,11 +48,11 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.navigation_music:
                         viewPager2.setCurrentItem(1);
                         break;
-                    case R.id.navigation_moments:
-                        viewPager2.setCurrentItem(2);
-                        break;
+//                    case R.id.navigation_moments:
+//                        viewPager2.setCurrentItem(2);
+//                        break;
                     case R.id.navigation_settings:
-                        viewPager2.setCurrentItem(3);
+                        viewPager2.setCurrentItem(2);
                         break;
                 }
                 return false;
@@ -69,10 +69,10 @@ public class MainActivity extends AppCompatActivity {
                     case 1:
                         bottomNavigationView.getMenu().findItem(R.id.navigation_music).setChecked(true);
                         break;
+//                    case 2:
+//                        bottomNavigationView.getMenu().findItem(R.id.navigation_moments).setChecked(true);
+//                        break;
                     case 2:
-                        bottomNavigationView.getMenu().findItem(R.id.navigation_moments).setChecked(true);
-                        break;
-                    case 3:
                         bottomNavigationView.getMenu().findItem(R.id.navigation_settings).setChecked(true);
                         break;}
                 super.onPageSelected(position);

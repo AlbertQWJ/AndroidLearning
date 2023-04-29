@@ -11,10 +11,10 @@
         android:icon="@drawable/ic_baseline_library_music_24"
         android:title="@string/title_music" />
 
-    <item
-        android:id="@+id/navigation_moments"
-        android:icon="@drawable/ic_baseline_keyboard_command_key_24"
-        android:title="@string/title_moments" />
+<!--    <item-->
+<!--        android:id="@+id/navigation_moments"-->
+<!--        android:icon="@drawable/ic_baseline_keyboard_command_key_24"-->
+<!--        android:title="@string/title_moments" />-->
 
     <item
         android:id="@+id/navigation_settings"

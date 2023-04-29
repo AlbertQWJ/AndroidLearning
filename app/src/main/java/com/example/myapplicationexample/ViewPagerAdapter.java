@@ -18,8 +18,8 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
         switch (position){
             case 0: return new ChatsFragment();
             case 1: return new MusicFragment();
-            case 2: return new MomentsFragment();
-            case 3: return new SettingsFragment();
+//            case 2: return new MomentsFragment();
+            case 2: return new SettingsFragment();
             default: return new ChatsFragment();
         }
     }

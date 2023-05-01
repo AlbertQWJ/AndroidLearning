@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void initView() {
 
-        // 初始化控件
+        // Initializing controls
         progressBar = findViewById(R.id.progressBar);
 
 
@@ -123,7 +123,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mGoogleSignInClient= GoogleSignIn.getClient(this, gso);
 
-        // 设置点击事件监听器
+        // Setting the click event listener
         mBtLoginactivityLogin.setOnClickListener(this);
         mTvLoginactivityRegister.setOnClickListener(this);
 
@@ -251,7 +251,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public void onClick(View view) {
         switch (view.getId()) {
-            // 跳转到注册界面
+            // Jump to the registration screen
             case R.id.loginactivity_tv_register:
                 startActivity(new Intent(this, RegisterActivity.class));
                 finish();
@@ -302,11 +302,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                        }
 //                    }
 //                    if (match) {
-//                        Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
 //                        startActivity(new Intent(this, HomeActivity.class));
 //                        finish();
 //                    } else {
-//                        Toast.makeText(this, "密码不正确，或用户不存在", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(this, "Password is incorrect, or user does not exist", Toast.LENGTH_SHORT).show();
 //                    }
                 } else {
                     progressBar.setVisibility(View.GONE);

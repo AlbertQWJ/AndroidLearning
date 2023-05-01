@@ -1,5 +1,5 @@
 package com.example.myapplicationexample;
-//package uk.ac.tees.scedt.mad.b;
+//package uk.ac.tees.aad.a0547505.WeijieQIU;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -27,15 +27,15 @@ public class Code {
     }
 
     //default settings
-    //验证码默认随机数的个数
+    //The default number of random numbers of verification code
     private static final int DEFAULT_CODE_LENGTH = 4;
-    //默认字体大小
+    //Default font size
     private static final int DEFAULT_FONT_SIZE = 25;
-    //默认线条的条数
+    //Default number of lines
     private static final int DEFAULT_LINE_NUMBER = 5;
-    //padding值
+    //padding value
     private static final int BASE_PADDING_LEFT = 10, RANGE_PADDING_LEFT = 15, BASE_PADDING_TOP = 15, RANGE_PADDING_TOP = 20;
-    //验证码的默认宽高
+    //Default width and height of captcha
     private static final int DEFAULT_WIDTH = 100, DEFAULT_HEIGHT = 40;
 
     //settings decided by the layout xml
@@ -53,7 +53,7 @@ public class Code {
     private String code;
     private int padding_left, padding_top;
     private Random random = new Random();
-    //验证码图片
+    //verification code picture
     public Bitmap createBitmap() {
         padding_left = 0;
 
@@ -66,19 +66,19 @@ public class Code {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setTextSize(font_size);
-        //画验证码
+        //Draw verification code
         for (int i = 0; i < code.length(); i++) {
             randomTextStyle(paint);
             randomPadding();
             c.drawText(code.charAt(i) + "", padding_left, padding_top, paint);
         }
-        //画线条
+        //Drawing lines
         for (int i = 0; i < line_number; i++) {
             drawLine(c, paint);
         }
 
-//        c.save( Canvas.ALL_SAVE_FLAG );//保存
-        c.save();//保存
+//        c.save( Canvas.ALL_SAVE_FLAG );//Save
+        c.save();//Save
         c.restore();//
         return bp;
     }
@@ -87,7 +87,7 @@ public class Code {
         return code;
     }
 
-    //生成验证码
+    //Generate verification code
     private String createCode() {
         StringBuilder buffer = new StringBuilder();
         for (int i = 0; i < codeLength; i++) {
@@ -95,7 +95,7 @@ public class Code {
         }
         return buffer.toString();
     }
-    //画干扰线
+    //Draw interference lines
     private void drawLine(Canvas canvas, Paint paint) {
         int color = randomColor();
         int startX = random.nextInt(width);
@@ -106,7 +106,7 @@ public class Code {
         paint.setColor(color);
         canvas.drawLine(startX, startY, stopX, stopY, paint);
     }
-    //生成随机颜色
+    //Generate random colors
     private int randomColor() {
         return randomColor(1);
     }
@@ -117,18 +117,18 @@ public class Code {
         int blue = random.nextInt(256) / rate;
         return Color.rgb(red, green, blue);
     }
-    //随机生成文字样式，颜色，粗细，倾斜度
+    //Randomly generate text style, color, thickness, slant
     private void randomTextStyle(Paint paint) {
         int color = randomColor();
         paint.setColor(color);
-        paint.setFakeBoldText(random.nextBoolean());  //true为粗体，false为非粗体
+        paint.setFakeBoldText(random.nextBoolean());  //true for bold, false for non-bold
         float skewX = random.nextInt(11) / 10;
         skewX = random.nextBoolean() ? skewX : -skewX;
-        paint.setTextSkewX(skewX); //float类型参数，负数表示右斜，整数左斜
-        //paint.setUnderlineText(true); //true为下划线，false为非下划线
-        //paint.setStrikeThruText(true); //true为删除线，false为非删除线
+        paint.setTextSkewX(skewX); //float type parameter, negative numbers are right-skewed, integers are left-skewed
+        //paint.setUnderlineText(true); //true is underlined, false is non-underlined
+        //paint.setStrikeThruText(true); //true for strikethrough, false for non-strikethrough
     }
-    //随机生成padding值
+    //Randomly generated padding values
     private void randomPadding() {
         padding_left += base_padding_left + random.nextInt(range_padding_left);
         padding_top = base_padding_top + random.nextInt(range_padding_top);

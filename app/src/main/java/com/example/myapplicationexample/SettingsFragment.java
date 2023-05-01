@@ -159,27 +159,20 @@ public class SettingsFragment extends Fragment {
         binding = null;
     }
 
-    /**
-     * 扫码方法
-     */
+    //Scan the Code
     private void scanCode() {
 
         ScanOptions options = new ScanOptions();
-        //IntentIntegrator integrator = new IntentIntegrator(getActivity());
-        // 设置要扫描的条码类型，ONE_D_CODE_TYPES：一维码，QR_CODE_TYPES-二维码
-        //options.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
         // Set prompt text
         options.setPrompt("Volume up to flash on");
         // Set beep
-        options.setBeepEnabled(true); // 扫到码后播放提示音
+        options.setBeepEnabled(true);
         // Set capture activity
         options.setCaptureActivity(CaptureAct.class);
         //Locked orientation
         options.setOrientationLocked(true);
-        options.setCameraId(0);  // 使用默认的相机
+        options.setCameraId(0);
         options.setBarcodeImageEnabled(true);
-        // Initiae scan
-        //integrator.initiateScan();
         // Launch
         barcodeLauncher.launch(options);
 
@@ -193,34 +186,14 @@ public class SettingsFragment extends Fragment {
                 } else {
                     Toast.makeText(getContext().getApplicationContext(), "Scanned: " + result.getContents(), Toast.LENGTH_SHORT).show();
                     ClipboardManager manager = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                    //创建ClipData对象
-                    //第一个参数只是一个标记，随便传入。
-                    //第二个参数是要复制到剪贴版的内容
+                    //Create ClipData object
+                    //The first parameter is just a token, passed in randomly.
+                    //The second parameter is the content to be copied to the clipboard
                     ClipData clip = ClipData.newPlainText("copy text", result.getContents());
-                    //传入clipdata对象.
+                    //The second parameter is the content to be copied to the clipboard
                     manager.setPrimaryClip(clip);
                     Toast.makeText(getContext().getApplicationContext(), "Content Copied to Clipboard", Toast.LENGTH_LONG).show();
                 }
             });
-
-//    /**
-//     * 扫码结果事件
-//     * @param requestCode
-//     * @param resultCode
-//     * @param data
-//     */
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-//        if(result != null) {
-//            if(result.getContents() == null) {
-//                Toast.makeText(getActivity(), "扫码取消！", Toast.LENGTH_LONG).show();
-//            } else {
-//                Toast.makeText(getActivity(), "扫描成功，条码值: " + result.getContents(), Toast.LENGTH_LONG).show();
-//            }
-//        } else {
-//            super.onActivityResult(requestCode, resultCode, data);
-//        }
-//    }
 
 }

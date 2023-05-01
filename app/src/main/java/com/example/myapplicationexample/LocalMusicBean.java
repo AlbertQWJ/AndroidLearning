@@ -2,34 +2,34 @@ package com.example.myapplicationexample;
 
 public class LocalMusicBean {
 
-    private String id; //歌曲id
-    private String song; //歌曲名称
-    private String singer; //歌手名称
-    private String album; //专辑名称
-    private String duration; //歌曲时长
-    private String path; //歌曲路径
-    private String albumArt;  //专辑地址
+    private String id; //Song id
+    private String song; //Song Name
+    private String singer; //Singer Name
+    private String album; //Album Name
+    private String duration; //Song Length
+    private String path; //Song Path
+    //private String albumArt;  //Album Address
 
     public LocalMusicBean() {
     }
 
-    public LocalMusicBean(String id, String song, String singer, String album, String duration, String path,String albumArt) {
+    public LocalMusicBean(String id, String song, String singer, String album, String duration, String path) {
         this.id = id;
         this.song = song;
         this.singer = singer;
         this.album = album;
         this.duration = duration;
         this.path = path;
-        this.albumArt = albumArt;
+        //this.albumArt = albumArt;
     }
 
-    public String getAlbumArt() {
-        return albumArt;
-    }
-
-    public void setAlbumArt(String albumArt) {
-        this.albumArt = albumArt;
-    }
+//    public String getAlbumArt() {
+//        return albumArt;
+//    }
+//
+//    public void setAlbumArt(String albumArt) {
+//        this.albumArt = albumArt;
+//    }
 
     public String getId() {
         return id;

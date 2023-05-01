@@ -33,13 +33,13 @@ public class MusicFragment extends Fragment implements View.OnClickListener{
     TextView singerTv,songTv;
     RecyclerView musicRv;
 
-    //    数据源
+    //Data source
     List<LocalMusicBean> mDatas;
     private LocalMusicAdapter adapter;
 
-    //    记录当前正在播放的音乐的位置
+    //Record the position of the currently playing music
     int currnetPlayPosition = -1;
-    //    记录暂停音乐时进度条的位置
+    //Record the position of the progress bar when music is paused
     int currentPausePositionInSong = 0;
     MediaPlayer mediaPlayer;
 
@@ -62,15 +62,15 @@ public class MusicFragment extends Fragment implements View.OnClickListener{
 
         mediaPlayer = new MediaPlayer();
         mDatas = new ArrayList<>();
-//     创建适配器对象
+//      Creating Adapter Objects
         adapter = new LocalMusicAdapter(getContext(), mDatas);
         musicRv.setAdapter(adapter);
-//        设置布局管理器
+//      Setting up the layout manager
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         musicRv.setLayoutManager(layoutManager);
-//        加载本地数据源
+//      Loading local data sources
         loadLocalMusicData();
-//        设置每一项的点击事件
+//      Set the click event for each item
         setEventListener();
 
         // Inflate the layout for this fragment
@@ -78,7 +78,7 @@ public class MusicFragment extends Fragment implements View.OnClickListener{
     }
 
     private void setEventListener() {
-        /* 设置每一项的点击事件*/
+        /* Set the click event for each item */
         adapter.setOnItemClickListener(new LocalMusicAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, int position) {
@@ -90,20 +90,20 @@ public class MusicFragment extends Fragment implements View.OnClickListener{
     }
 
     public void playMusicInMusicBean(LocalMusicBean musicBean) {
-        /*根据传入对象播放音乐*/
-        //设置底部显示的歌手名称和歌曲名
+        /* Play music according to the incoming object*/
+        // Set the artist name and song name to be displayed at the bottom
         singerTv.setText(musicBean.getSinger());
         songTv.setText(musicBean.getSong());
         stopMusic();
-//                重置多媒体播放器
+//                Reset Media Player
         mediaPlayer.reset();
-//                设置新的播放路径
+//                Set a new play path
         try {
             mediaPlayer.setDataSource(musicBean.getPath());
-            String albumArt = musicBean.getAlbumArt();
-            Log.i("lsh123", "playMusicInMusicBean: albumpath=="+albumArt);
-            Bitmap bm = BitmapFactory.decodeFile(albumArt);
-            Log.i("lsh123", "playMusicInMusicBean: bm=="+bm);
+            //String albumArt = musicBean.getAlbumArt();
+//            Log.i("lsh123", "playMusicInMusicBean: albumpath=="+albumArt);
+//            Bitmap bm = BitmapFactory.decodeFile(albumArt);
+//            Log.i("lsh123", "playMusicInMusicBean: bm=="+bm);
             //albumIv.setImageBitmap(bm);
             playMusic();
 
@@ -113,13 +113,13 @@ public class MusicFragment extends Fragment implements View.OnClickListener{
     }
 
     /*
-     * 点击播放按钮播放音乐，或者暂停从新播放
-     * 播放音乐有两种情况：
-     * 1.从暂停到播放
-     * 2.从停止到播放
+     * Click the play button to play the music, or pause to play it again
+     * There are two scenarios for playing music:
+     * 1. from pause to play
+     * 2. From stop to play
      * */
     private void playMusic() {
-        /* 播放音乐的函数*/
+        /* Function to play music */
         if (mediaPlayer!=null&&!mediaPlayer.isPlaying()) {
             if (currentPausePositionInSong == 0) {
                 try {
@@ -130,7 +130,7 @@ public class MusicFragment extends Fragment implements View.OnClickListener{
                     e.printStackTrace();
                 }
             }else{
-//                从暂停到播放
+//              From pause to play
                 mediaPlayer.seekTo(currentPausePositionInSong);
                 mediaPlayer.start();
             }
@@ -138,7 +138,7 @@ public class MusicFragment extends Fragment implements View.OnClickListener{
         }
     }
     private void pauseMusic() {
-        /* 暂停音乐的函数*/
+        /* function to pause the music */
         if (mediaPlayer!=null&&mediaPlayer.isPlaying()) {
             currentPausePositionInSong = mediaPlayer.getCurrentPosition();
             mediaPlayer.pause();
@@ -146,7 +146,7 @@ public class MusicFragment extends Fragment implements View.OnClickListener{
         }
     }
     private void stopMusic() {
-        /* 停止音乐的函数*/
+        /* Function to stop the music */
         if (mediaPlayer!=null) {
             currentPausePositionInSong = 0;
             mediaPlayer.pause();
@@ -164,14 +164,14 @@ public class MusicFragment extends Fragment implements View.OnClickListener{
     }
 
     private void loadLocalMusicData() {
-        /* 加载本地存储当中的音乐mp3文件到集合当中*/
-//        1.获取ContentResolver对象
+        /* Load the music mp3 files from local storage into the collection */
+//      1. Get the ContentResolver object
         ContentResolver resolver = getContext().getContentResolver();
-//        2.获取本地音乐存储的Uri地址
+//      2. Get the Uri address of local music storage
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-//        3 开始查询地址
+//      3. Start search address
         Cursor cursor = resolver.query(uri, null, null, null, null);
-//        4.遍历Cursor
+//      4. Iterate through the Cursor
         int id = 0;
         while (cursor.moveToNext()) {
             String song = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
@@ -183,14 +183,14 @@ public class MusicFragment extends Fragment implements View.OnClickListener{
             long duration = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION));
             SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
             String time = sdf.format(new Date(duration));
-//          获取专辑图片主要是通过album_id进行查询
+//          The main way to get album images is to query by album_id
             String album_id = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID));
-            String albumArt = getAlbumArt(album_id);
-//            将一行当中的数据封装到对象当中
-            LocalMusicBean bean = new LocalMusicBean(sid, song, singer, album, time, path,albumArt);
+//            String albumArt = getAlbumArt(album_id);
+//          Wrapping the data in a row into an object
+            LocalMusicBean bean = new LocalMusicBean(sid, song, singer, album, time, path);
             mDatas.add(bean);
         }
-//        数据源变化，提示适配器更新
+//      Data source changes, prompting adapter updates
         adapter.notifyDataSetChanged();
     }
 
@@ -215,7 +215,7 @@ public class MusicFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.local_music_bottom_iv_last:
                 if (currnetPlayPosition ==0) {
-                    Toast.makeText(getContext().getApplicationContext(),"已经是第一首了，没有上一曲！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext().getApplicationContext(),"It's already the first song, not the last one!",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 currnetPlayPosition = currnetPlayPosition-1;
@@ -224,7 +224,7 @@ public class MusicFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.local_music_bottom_iv_next:
                 if (currnetPlayPosition ==mDatas.size()-1) {
-                    Toast.makeText(getContext().getApplicationContext(),"已经是最后一首了，没有下一曲！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext().getApplicationContext(),"It's already the last song, there is no next song!",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 currnetPlayPosition = currnetPlayPosition+1;
@@ -233,15 +233,15 @@ public class MusicFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.local_music_bottom_iv_play:
                 if (currnetPlayPosition == -1) {
-//                    并没有选中要播放的音乐
-                    Toast.makeText(getContext().getApplicationContext(),"请选择想要播放的音乐",Toast.LENGTH_SHORT).show();
+//                  There is no music selected to be played
+                    Toast.makeText(getContext().getApplicationContext(),"Please select the music you want to play",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (mediaPlayer.isPlaying()) {
-//                    此时处于播放状态，需要暂停音乐
+//                  At this point in the play state, you need to pause the music
                     pauseMusic();
                 }else {
-//                    此时没有播放音乐，点击开始播放音乐
+//                  No music is playing at this time, click to start playing music
                     playMusic();
                 }
                 break;

@@ -83,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 //        mDatabaseHelper = new DatabaseHelper(this);
 
-        //将验证码用图片的形式显示出来
+        //Display the verification code as a picture
         mIvRegisteractivityShowcode.setImageBitmap(Code.getInstance().createBitmap());
         realCode = Code.getInstance().getCode().toLowerCase();
 
@@ -176,7 +176,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void initView(){
 
-        // 初始化控件
+        // Initializing controls
         mAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.progressBar);
         mBtRegisteractivityRegister = findViewById(R.id.registeractivity_btn_register);
@@ -189,7 +189,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         mIvRegisteractivityShowcode = findViewById(R.id.registeractivity_iv_showCode);
         layoutImage = findViewById(R.id.layoutImage);
 
-        // 设置点击事件监听器
+        // Setting the click event listener
         mIvRegisteractivityBack.setOnClickListener(this);
         mIvRegisteractivityShowcode.setOnClickListener(this);
         mBtRegisteractivityRegister.setOnClickListener(this);
@@ -211,28 +211,28 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 pickImage.launch(intent);
                 break;
-            case R.id.registeractivity_iv_back: //返回登录页面
+            case R.id.registeractivity_iv_back: //Back to the login page
                 Intent intent1 = new Intent(this, LoginActivity.class);
                 startActivity(intent1);
                 finish();
                 break;
-            case R.id.registeractivity_iv_showCode:    //改变随机验证码的生成
+            case R.id.registeractivity_iv_showCode:    //Change the generation of random Verification Code
                 mIvRegisteractivityShowcode.setImageBitmap(Code.getInstance().createBitmap());
                 realCode = Code.getInstance().getCode().toLowerCase();
                 progressBar.setVisibility(View.GONE);
                 break;
-            case R.id.registeractivity_btn_register:    //注册按钮
+            case R.id.registeractivity_btn_register:    //Register button
                 progressBar.setVisibility(View.VISIBLE);
-                //获取用户输入的Profile, 用户名、密码、验证码
+                //Get the user input profile, username, password, authentication code
                 String username = mEtRegisteractivityUsername.getText().toString().trim();
                 String password = mEtRegisteractivityPassword1.getText().toString().trim();
                 String password2 = mEtRegisteractivityPassword2.getText().toString().trim();
                 String phoneCode = mEtRegisteractivityPhonecodes.getText().toString().toLowerCase();
-                //注册验证
+                //Registration Verification
                 if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(phoneCode) && !(encodedImage == null) ) {
                     if (password.equals(password2)){
                         if (phoneCode.equals(realCode)) {
-                            //将用户名和密码加入到数据库中
+                            //Add the username and password to the database
 //                            mDatabaseHelper.add(username, password);
 //                            startActivity(new Intent(this, HomeActivity.class));
 //                            finish();

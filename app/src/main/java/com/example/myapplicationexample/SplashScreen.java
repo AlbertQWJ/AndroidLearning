@@ -37,8 +37,8 @@ public class SplashScreen extends AppCompatActivity {
         bottomAnimation = AnimationUtils.loadAnimation(this,R.anim.bottom_animation);
         middleAnimation = AnimationUtils.loadAnimation(this,R.anim.middle_animation);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !isRefuse) {// android 11  且 不是已经被拒绝
-            // 先判断有没有权限
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !isRefuse) {
+            // Determine if you have permission first
             if (!Environment.isExternalStorageManager()) {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
                 intent.setData(Uri.parse("package:" + getPackageName()));
@@ -80,18 +80,18 @@ public class SplashScreen extends AppCompatActivity {
         },SPLASH_TIME_OUT);
     }
 
-    // 带回授权结果
+    // Bring back authorization results
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1024 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            // 检查是否有权限
+            // Check if you have permission
             if (Environment.isExternalStorageManager()) {
                 isRefuse = false;
-                // 授权成功
+                // Successful authorization
             } else {
                 isRefuse = true;
-                // 授权失败
+                // Authorization failure
             }
         }
     }
